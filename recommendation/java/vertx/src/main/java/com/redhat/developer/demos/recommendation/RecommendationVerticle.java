@@ -15,7 +15,7 @@ import io.vertx.ext.web.codec.BodyCodec;
 
 public class RecommendationVerticle extends AbstractVerticle {
 
-    private static final String RESPONSE_STRING_FORMAT = "recommendation v1 from '%s': %d\n";
+    private static final String RESPONSE_STRING_FORMAT = "recommendation %s from '%s': %d\n";
     private static final String HTTP_NOW = "now.httpbin.org";
 
     private static final String HOSTNAME = parseContainerIdFromHostname(
@@ -75,7 +75,8 @@ public class RecommendationVerticle extends AbstractVerticle {
             ctx.response().setStatusCode(503).end(String.format("recommendation misbehavior from '%s'\n", HOSTNAME));
         } else {
             count++;
-            ctx.response().end(String.format(RESPONSE_STRING_FORMAT, HOSTNAME, count));
+            String version = System.getenv().getOrDefault("VERSION", "v2")
+            ctx.response().end(String.format(RESPONSE_STRING_FORMAT, version, HOSTNAME, count));
         }
     }
 
