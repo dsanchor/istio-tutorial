@@ -75,7 +75,7 @@ public class RecommendationVerticle extends AbstractVerticle {
             ctx.response().setStatusCode(503).end(String.format("recommendation misbehavior from '%s'\n", HOSTNAME));
         } else {
             count++;
-            String version = System.getenv().getOrDefault("VERSION", "v2")
+            String version = System.getenv().getOrDefault("VERSION", "v2");
             ctx.response().end(String.format(RESPONSE_STRING_FORMAT, version, HOSTNAME, count));
         }
     }
