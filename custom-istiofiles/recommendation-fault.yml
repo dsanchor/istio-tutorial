@@ -8,11 +8,7 @@ spec:
   hosts:
   - recommendation
   http:
-  - fault:
-      abort:
-        httpStatus: 500
-        percent: 30
-    route: 
+  - route:
     - destination:
         host: recommendation
         subset: version-v1
@@ -21,3 +17,9 @@ spec:
         host: recommendation
         subset: version-v2
       weight: 50
+    fault:
+      abort:
+        percent: 30
+        httpStatus: 500
+
+

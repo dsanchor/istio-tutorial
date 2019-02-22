@@ -12,13 +12,13 @@ spec:
   hosts:
   - customer-istio-system.${APP_SUBDOMAIN}
   http:
-  - route:
+  - retries:
+      attempts: 3
+      perTryTimeout: 4s
+    route:
     - destination:
         host: customer
         subset: version-v1
-    retries:
-      attempts: 5
-      perTryTimeout: 1s
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
