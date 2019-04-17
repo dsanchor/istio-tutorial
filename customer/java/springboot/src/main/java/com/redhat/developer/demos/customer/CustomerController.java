@@ -37,7 +37,6 @@ public class CustomerController {
     @RequestMapping(value = "/", method = RequestMethod.POST, consumes = "text/plain")
     public ResponseEntity<String> addRecommendation(@RequestBody String body) {
         try {
-            System.out.println("Request body: " + body);
             return restTemplate.postForEntity(remoteURL, body, String.class);
         } catch (HttpStatusCodeException ex) {
             logger.warn("Exception trying to post to preference service.", ex);
@@ -53,6 +52,7 @@ public class CustomerController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ResponseEntity<String> getCustomer(@RequestHeader("User-Agent") String userAgent, @RequestHeader(value = "user-preference", required = false) String userPreference) {
         try {
+            logger.info("Request coming from user-agent: {}", userAgent);
             /**
              * Set baggage
              */
