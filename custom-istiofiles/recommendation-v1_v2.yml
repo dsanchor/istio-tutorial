@@ -26,9 +26,6 @@ metadata:
     group: recommendation
 spec:
   host: recommendation
-  trafficPolicy:
-    tls:
-      mode: ISTIO_MUTUAL
   subsets:
   - labels:
       version: v1

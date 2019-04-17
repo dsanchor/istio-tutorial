@@ -22,9 +22,6 @@ metadata:
     group: preference
 spec:
   host: preference
-  trafficPolicy:
-    tls:
-      mode: ISTIO_MUTUAL
   subsets:
   - labels:
       version: v1

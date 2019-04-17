@@ -10,11 +10,12 @@ spec:
   gateways:
   - customer-gw
   hosts:
-  - customer-istio-system.${APP_SUBDOMAIN}
+  - customer-${NAMESPACE}-istio-system.${APP_SUBDOMAIN}
   http:
   - retries:
       attempts: 3
-      perTryTimeout: 4s
+      perTryTimeout: 1s
+      retryOn: 5xx
     route:
     - destination:
         host: customer
@@ -29,9 +30,6 @@ metadata:
     group: tutorial
 spec:
   host: customer
-  trafficPolicy:
-    tls:
-      mode: ISTIO_MUTUAL
   subsets:
   - labels:
       version: v1

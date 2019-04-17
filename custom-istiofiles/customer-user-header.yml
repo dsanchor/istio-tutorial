@@ -10,7 +10,7 @@ spec:
   gateways:
   - customer-gw
   hosts:
-  - customer-istio-system.${APP_SUBDOMAIN}
+  - customer-${NAMESPACE}-istio-system.${APP_SUBDOMAIN}
   http:
   - match:
     - headers:
@@ -34,9 +34,6 @@ metadata:
     group: tutorial
 spec:
   host: customer
-  trafficPolicy:
-    tls:
-      mode: ISTIO_MUTUAL
   subsets:
   - labels:
       version: v1

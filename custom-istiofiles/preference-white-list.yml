@@ -2,7 +2,7 @@ apiVersion: config.istio.io/v1alpha2
 kind: listchecker
 metadata:
   name: preferencewhitelist
-  namespace: istio-system
+  namespace: $NAMESPACE
 spec:
 # providerUrl file format: ["customer", "XXX", "YYY"]
 #  providerUrl: https://raw.githubusercontent.com/dsanchor/istio-tutorial/master/whitelist/preference
@@ -13,8 +13,7 @@ apiVersion: "config.istio.io/v1alpha2"
 kind: listentry
 metadata:
   name: preferencesource
-  namespace: istio-system
-#  namespace: $NAMESPACE
+  namespace: $NAMESPACE
 spec:
   value: source.labels["app"]
 ---
@@ -22,8 +21,7 @@ apiVersion: "config.istio.io/v1alpha2"
 kind: rule
 metadata:
   name: checkfromcustomer
-  namespace: istio-system
-#  namespace: $NAMESPACE
+  namespace: $NAMESPACE
 spec:
   match: destination.labels["app"] == "preference"
   actions:

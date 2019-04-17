@@ -10,7 +10,7 @@ spec:
   gateways:
   - customer-gw
   hosts:
-  - customer-istio-system.${APP_SUBDOMAIN}
+  - customer-${NAMESPACE}-istio-system.${APP_SUBDOMAIN}
   http:
   - route:
     - destination:

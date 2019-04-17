@@ -1,3 +1,4 @@
+---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
@@ -11,11 +12,18 @@ spec:
   hosts:
   - customer-${NAMESPACE}-istio-system.${APP_SUBDOMAIN}
   http:
+  - match:
+    - headers:
+        user:
+          exact: david
+    route:
+    - destination:
+        host: customer
+        subset: version-v2
   - route:
     - destination:
         host: customer
         subset: version-v1
-      weight: 100
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
@@ -29,10 +37,11 @@ spec:
   trafficPolicy:
     tls:
       mode: ISTIO_MUTUAL
-    loadBalancer:
-      consistentHash:
-        httpHeaderName: X-Customer-Session
   subsets:
   - labels:
       version: v1
     name: version-v1
+  - labels:
+      version: v2
+    name: version-v2
+---

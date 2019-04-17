@@ -6,7 +6,7 @@ metadata:
   labels:
     group: tutorial
 spec:
-  host: customer-istio-system.${APP_SUBDOMAIN}
+  host: customer-${NAMESPACE}-istio-system.${APP_SUBDOMAIN}
   port:
     targetPort: http2
   to:
@@ -27,7 +27,7 @@ spec:
     istio: ingressgateway
   servers:
   - hosts:
-    - customer-istio-system.${APP_SUBDOMAIN}
+    - customer-${NAMESPACE}-istio-system.${APP_SUBDOMAIN}
     port:
       name: http2
       number: 80
@@ -44,7 +44,7 @@ spec:
   gateways:
   - customer-gw
   hosts:
-  - customer-istio-system.${APP_SUBDOMAIN}
+  - customer-${NAMESPACE}-istio-system.${APP_SUBDOMAIN}
   http:
   - route:
     - destination:
@@ -61,9 +61,6 @@ metadata:
     group: tutorial
 spec:
   host: customer
-  trafficPolicy:
-    tls:
-      mode: ISTIO_MUTUAL
   subsets:
   - labels:
       version: v1

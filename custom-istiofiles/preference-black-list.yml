@@ -2,7 +2,7 @@ apiVersion: "config.istio.io/v1alpha2"
 kind: denier
 metadata:
   name: denypartnerhandler
-  namespace: istio-system
+  namespace: $NAMESPACE
 spec:
   status:
     code: 7
@@ -12,14 +12,14 @@ apiVersion: "config.istio.io/v1alpha2"
 kind: checknothing
 metadata:
   name: denypartnerrequests
-  namespace: istio-system
+  namespace: $NAMESPACE
 spec:
 ---
 apiVersion: "config.istio.io/v1alpha2"
 kind: rule
 metadata:
   name: denypartner
-  namespace: istio-system
+  namespace: $NAMESPACE
 spec:
   match: destination.labels["app"] == "preference" && source.labels["app"]=="partner"
   actions:

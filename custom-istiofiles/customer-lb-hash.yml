@@ -27,8 +27,6 @@ metadata:
 spec:
   host: customer
   trafficPolicy:
-    tls:
-      mode: ISTIO_MUTUAL
     loadBalancer:
       consistentHash:
         httpHeaderName: X-Customer-Session
