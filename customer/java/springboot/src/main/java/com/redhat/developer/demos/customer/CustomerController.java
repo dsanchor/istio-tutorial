@@ -37,6 +37,7 @@ public class CustomerController {
     @RequestMapping(value = "/", method = RequestMethod.POST, consumes = "text/plain")
     public ResponseEntity<String> addRecommendation(@RequestBody String body) {
         try {
+            System.out.println("Request body: " + body);
             return restTemplate.postForEntity(remoteURL, body, String.class);
         } catch (HttpStatusCodeException ex) {
             logger.warn("Exception trying to post to preference service.", ex);
