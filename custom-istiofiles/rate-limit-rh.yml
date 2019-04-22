@@ -1,30 +1,7 @@
 apiVersion: "config.istio.io/v1alpha2"
-kind: memquota
-metadata:
-  name: handler
-  namespace: istio-system
-spec:
-  quotas:
-  - name: requestcount.quota.istio-system
-    maxAmount: 5000
-    validDuration: 1s
-    # The first matching override is applied.
-    # A requestcount quota is checked against override dimensions.
-    overrides:
-    - dimensions:
-        destination: customer
-      maxAmount: 2
-      validDuration: 1s
-    - dimensions:
-        destination: partner
-      maxAmount: 5
-      validDuration: 1s
----
-apiVersion: "config.istio.io/v1alpha2"
 kind: quota
 metadata:
   name: requestcount
-  namespace: istio-system
 spec:
   dimensions:
     source: source.labels["app"] | source.service | "unknown"
@@ -42,21 +19,23 @@ spec:
   - handler: handler.memquota
     instances:
     - requestcount.quota
----	
+---
 apiVersion: config.istio.io/v1alpha2
 kind: QuotaSpec
 metadata:
+  creationTimestamp: null
   name: request-count
   namespace: istio-system
 spec:
   rules:
   - quotas:
     - charge: 1
-      quota: requestcount.quota.istio-system
+      quota: RequestCount
 ---
 apiVersion: config.istio.io/v1alpha2
 kind: QuotaSpecBinding
 metadata:
+  creationTimestamp: null
   name: request-count
   namespace: istio-system
 spec:
@@ -64,8 +43,11 @@ spec:
   - name: request-count
     namespace: istio-system
   services:
-  - name: customer
-    namespace: ${NAMESPACE}
   - name: partner
     namespace: ${NAMESPACE}
-
+  - name: customer
+    namespace: ${NAMESPACE}
+  - name: preference
+    namespace: ${NAMESPACE}
+  - name: recommendation
+    namespace: ${NAMESPACE}
