@@ -21,7 +21,7 @@ metadata:
   name: denypartner
   namespace: $NAMESPACE
 spec:
-  match: destination.labels["app"] == "preference" && source.labels["app"]=="partner"
+  match: destination.labels["app"] == "preference" && source.labels["app"]=="customer"
   actions:
   - handler: denypartnerhandler.denier
     instances: [ denypartnerrequests.checknothing ]
